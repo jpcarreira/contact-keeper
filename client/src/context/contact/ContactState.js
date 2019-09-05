@@ -31,14 +31,14 @@ const ContactState = props => {
         type: 'personal'
       },
       {
-        id: 1,
+        id: 3,
         name: 'Jim Appleseed',
         email: 'jimappleseed@me.com',
         phone: '+914567890',
         type: 'professional'
       },
       {
-        id: 1,
+        id: 4,
         name: 'Jen Appleseed',
         email: 'jennappleseed@me.com',
         phone: '+915678901',
