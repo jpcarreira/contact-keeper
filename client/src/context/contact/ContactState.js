@@ -67,6 +67,10 @@ const ContactState = props => {
     dispacth({ type: CLEAR_CURRENT });
   };
 
+  const updateContact = contact => {
+    dispacth({ type: UPDATE_CONTACT, payload: contact });
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -75,7 +79,8 @@ const ContactState = props => {
         addContact,
         deleteContact,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        updateContact
       }}
     >
       {props.children}

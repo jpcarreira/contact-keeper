@@ -3,16 +3,17 @@ import ContactContext from '../../context/contact/contactContext';
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
+  const { setCurrent, clearCurrent, deleteContact } = contactContext;
 
   const { id, name, email, phone, type } = contact;
 
   const onEdit = () => {
-    contactContext.setCurrent(contact);
+    setCurrent(contact);
   };
 
   const onDelete = () => {
-    contactContext.deleteContact(id);
-    contactContext.clearCurrent();
+    deleteContact(id);
+    clearCurrent();
   };
 
   return (
