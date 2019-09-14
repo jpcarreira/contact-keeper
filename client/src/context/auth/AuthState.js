@@ -33,9 +33,14 @@ const AuthState = props => {
 
     try {
       const res = await axios.get('api/auth');
-      dispacth({ type: USER_LOADED, payload: res.data });
+      dispacth({
+        type: USER_LOADED,
+        payload: res.data
+      });
     } catch (err) {
-      dispacth({ type: AUTH_ERROR });
+      dispacth({
+        type: AUTH_ERROR
+      });
     }
   };
 
@@ -49,11 +54,41 @@ const AuthState = props => {
     try {
       const res = await axios.post('api/users', formData, config);
 
-      dispacth({ type: REGISTER_SUCCESS, payload: res.data });
+      dispacth({
+        type: REGISTER_SUCCESS,
+        payload: res.data
+      });
 
       loadUser();
     } catch (err) {
-      dispacth({ type: REGISTER_FAIL, payload: err.response.data.msg });
+      dispacth({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
+
+  const login = async formData => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('api/auth', formData, config);
+
+      dispacth({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+
+      loadUser();
+    } catch (err) {
+      dispacth({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
     }
   };
 
@@ -71,6 +106,7 @@ const AuthState = props => {
         error: state.error,
         loadUser,
         register,
+        login,
         clearErrors
       }}
     >
