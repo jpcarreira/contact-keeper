@@ -1,8 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = () => {
   const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+  const { register, error, clearErrors } = authContext;
 
   const [user, setUser] = useState({
     name: '',
@@ -11,6 +16,13 @@ const Register = () => {
     password2: ''
   });
 
+  useEffect(() => {
+    if (error === 'User already exists') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+  }, [error]);
+
   const { name, email, password, password2 } = user;
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
@@ -18,11 +30,11 @@ const Register = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (name === '' || email === '' || password === '' || password2 === '') {
-      alertContext.setAlert('Please enter all fields!', 'danger');
+      setAlert('Please enter all fields!', 'danger');
     } else if (password !== password2) {
-      alertContext.setAlert('Passwords missmatch!', 'danger');
+      setAlert('Passwords missmatch!', 'danger');
     } else {
-      // TODO: call the context to register user
+      register({ name, email, password });
     }
   };
 
@@ -43,7 +55,7 @@ const Register = () => {
         <div className='form-group'>
           <label htmlFor='password'>Password</label>
           <input
-            type='text'
+            type='password'
             name='password'
             value={password}
             onChange={onChange}
@@ -52,7 +64,7 @@ const Register = () => {
         <div className='form-group'>
           <label htmlFor='password2'>Repeat Password</label>
           <input
-            type='text'
+            type='password'
             name='password2'
             value={password2}
             onChange={onChange}
